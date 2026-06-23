@@ -48,6 +48,21 @@ def normalize_year(df, column="year"):
 
     return df
 
+def normalize_text_columns(df):
+
+    for col in df.columns:
+
+        if df[col].dtype == "object":
+
+            df[col] = (
+                df[col]
+                .astype(str)
+                .str.replace("\n", " ", regex=False)
+                .str.strip()
+            )
+
+    return df
+
 if __name__ == "__main__":
 
     from loader import load_excel
@@ -66,3 +81,4 @@ if __name__ == "__main__":
     print(df.head())
 
     print(df.columns.tolist())
+
