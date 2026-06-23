@@ -1,4 +1,4 @@
-import sqlite3
+from db_utils import get_connection
 
 from loader import load_excel
 from normaliser import (
@@ -6,8 +6,6 @@ from normaliser import (
     normalize_text_columns
 )
 
-
-DB_PATH = "db/nifty100.db"
 
 
 def load_companies():
@@ -31,7 +29,7 @@ def load_companies():
 
     df = df[columns_to_keep]
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = get_connection()
 
     df.to_sql(
         "companies",

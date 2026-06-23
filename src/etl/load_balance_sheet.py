@@ -1,4 +1,4 @@
-import sqlite3
+from db_utils import get_connection
 
 from loader import load_excel
 from normaliser import normalize_column_names
@@ -14,7 +14,7 @@ def load_balance_sheet():
 
     df = normalize_column_names(df)
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = get_connection()
 
     df.to_sql(
         "balance_sheet",
