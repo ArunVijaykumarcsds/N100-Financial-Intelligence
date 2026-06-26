@@ -46,6 +46,10 @@ from modules.growth_dashboard_page import (
     get_growth_dashboard
 )
 
+from modules.eps_forecasting_page import (
+    get_eps_forecasting_dashboard
+)
+
 st.set_page_config(
     page_title="N100 Financial Intelligence",
     layout="wide"
@@ -82,7 +86,8 @@ page = st.sidebar.selectbox(
         "Growth Dashboard",
         "Master Ranking",
         "Revenue Forecasting",
-        "Profit Forecasting"
+        "Profit Forecasting",
+        "EPS Forecasting",
         
     ]
 )
@@ -740,3 +745,8 @@ elif page == "Revenue Forecasting":
 elif page == "Profit Forecasting":
 
     get_profit_forecasting_dashboard()
+
+# EPS Forecasting Dashboard 
+elif page == "EPS Forecasting":
+
+    get_eps_forecasting_dashboard()
