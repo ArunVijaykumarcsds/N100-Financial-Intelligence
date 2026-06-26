@@ -55,6 +55,14 @@ from modules.company_compare_page import (
     get_company_compare_dashboard
 )
 
+from modules.revenue_forecasting_page import (
+    get_revenue_forecasting_dashboard
+)
+
+from modules.profit_forecasting_page import (
+    get_profit_forecasting_dashboard
+)
+
 st.title("N100 Financial Intelligence")
 
 st.sidebar.title("Navigation")
@@ -73,6 +81,8 @@ page = st.sidebar.selectbox(
         "Valuation Dashboard",
         "Growth Dashboard",
         "Master Ranking",
+        "Revenue Forecasting",
+        "Profit Forecasting"
         
     ]
 )
@@ -721,3 +731,12 @@ elif page == "Ratio Analytics":
         data["coverage"]
     )
 
+# revenue forecasting via Linear regression 
+elif page == "Revenue Forecasting":
+
+    get_revenue_forecasting_dashboard()
+
+# profit forecasting Dashboard 
+elif page == "Profit Forecasting":
+
+    get_profit_forecasting_dashboard()
