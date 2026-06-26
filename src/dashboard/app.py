@@ -75,6 +75,10 @@ from modules.growth_prediction_page import (
     get_growth_prediction_dashboard
 )
 
+from modules.future_winners_page import (
+    get_future_winners_dashboard
+)
+
 st.title("N100 Financial Intelligence")
 
 st.sidebar.title("Navigation")
@@ -98,6 +102,7 @@ page = st.sidebar.selectbox(
         "EPS Forecasting",
         "Health Prediction",
         "Growth Prediction",
+        "Future Winners",
         
     ]
 )
@@ -770,3 +775,8 @@ elif page == "Health Prediction":
 elif page == "Growth Prediction":
 
     get_growth_prediction_dashboard()
+
+# Future Winners Dashboard
+elif page == "Future Winners":
+
+    get_future_winners_dashboard()
