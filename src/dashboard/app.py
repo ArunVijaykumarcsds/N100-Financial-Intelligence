@@ -83,6 +83,10 @@ from modules.ai_insights_page import (
     get_ai_insights_dashboard
 )
 
+from modules.executive_command_center_page import (
+    get_executive_command_center
+)
+
 st.title("N100 Financial Intelligence")
 
 st.sidebar.title("Navigation")
@@ -108,6 +112,7 @@ page = st.sidebar.selectbox(
         "Growth Prediction",
         "Future Winners",
         "AI Insights",
+        "Home",
         
     ]
 )
@@ -118,8 +123,7 @@ page = st.sidebar.selectbox(
 
 if page == "Home":
 
-    st.header("Dashboard Home")
-    st.write("Welcome to N100 Financial Intelligence")
+    get_executive_command_center()
 
 # =====================================================
 # TOP COMPANIES
