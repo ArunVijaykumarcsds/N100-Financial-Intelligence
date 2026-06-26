@@ -3,11 +3,11 @@ import streamlit as st
 import sys
 from pathlib import Path
 
-from pages.master_ranking_dashboard_page import (
+from modules.master_ranking_dashboard_page import (
     get_master_dashboard
 )
 
-from pages.ratio_analytics_page import (
+from modules.ratio_analytics_page import (
     get_ratio_dashboard
 )
 
@@ -15,40 +15,44 @@ sys.path.append(
     str(Path(__file__).resolve().parent.parent)
 )
 
-from analytics.company_compare import compare_companies
-from pages.top_companies_page import get_top_roe
-from pages.company_history_page import (
+from analytics.company_compare import get_company_comparison
+from modules.top_companies_page import get_top_roe
+from modules.company_history_page import (
     get_companies,
     get_company_history
 )
 
-from pages.financial_health_page import (
+from modules.financial_health_page import (
     get_financial_health
 )
 
-from pages.company_snapshot_page import (
+from modules.company_snapshot_page import (
     get_company_snapshot
 )
 
-from pages.winner_dashboard_page import (
+from modules.winner_dashboard_page import (
     get_winner_dashboard
 )
 
-from pages.sector_analytics_page import (
+from modules.sector_analytics_page import (
     get_sector_dashboard
 )
 
-from pages.valuation_dashboard_page import (
+from modules.valuation_dashboard_page import (
     get_valuation_dashboard
 )
 
-from pages.growth_dashboard_page import (
+from modules.growth_dashboard_page import (
     get_growth_dashboard
 )
 
 st.set_page_config(
     page_title="N100 Financial Intelligence",
     layout="wide"
+)
+
+from modules.company_compare_page import (
+    get_company_compare_dashboard
 )
 
 st.title("N100 Financial Intelligence")
@@ -68,7 +72,8 @@ page = st.sidebar.selectbox(
         "Sector Analytics",
         "Valuation Dashboard",
         "Growth Dashboard",
-        "Master Ranking"
+        "Master Ranking",
+        
     ]
 )
 
@@ -177,97 +182,7 @@ elif page == "Company History":
 
 elif page == "Company Comparison":
 
-    st.header("Company Comparison Analytics")
-
-    companies = get_companies()
-
-    company1 = st.selectbox(
-        "Company 1",
-        companies,
-        index=0
-    )
-
-    company2 = st.selectbox(
-        "Company 2",
-        companies,
-        index=1
-    )
-
-    df = compare_companies(
-        company1,
-        company2
-    )
-
-    st.dataframe(
-        df,
-        width="stretch"
-    )
-
-    # ROE Comparison
-
-    st.subheader("ROE Comparison")
-
-    fig = px.bar(
-        df,
-        x="company_name",
-        y="roe_percentage",
-        title="ROE Comparison"
-    )
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
-
-    # ROCE Comparison
-
-    st.subheader("ROCE Comparison")
-
-    fig = px.bar(
-        df,
-        x="company_name",
-        y="roce_percentage",
-        title="ROCE Comparison"
-    )
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
-
-    # Book Value Comparison
-
-    st.subheader("Book Value Comparison")
-
-    fig = px.bar(
-        df,
-        x="company_name",
-        y="book_value",
-        title="Book Value Comparison"
-    )
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
-
-    # Face Value Comparison
-
-    st.subheader("Face Value Comparison")
-
-    fig = px.bar(
-        df,
-        x="company_name",
-        y="face_value",
-        title="Face Value Comparison"
-    )
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
-
-    
+    get_company_compare_dashboard()
 
 # =====================================================
 # FINANCIAL HEALTH
@@ -805,3 +720,4 @@ elif page == "Ratio Analytics":
     st.dataframe(
         data["coverage"]
     )
+

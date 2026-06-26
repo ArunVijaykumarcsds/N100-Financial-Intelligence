@@ -1,52 +1,44 @@
-import sqlite3
 import pandas as pd
 
-DB_PATH = "db/nifty100.db"
-
-def compare_companies(company1, company2):
-
-    conn = sqlite3.connect(DB_PATH)
-
-    query = f"""
-    SELECT
-        id,
-        company_name,
-        roe_percentage,
-        roce_percentage,
-        book_value,
-        face_value
-    FROM companies
-    WHERE id IN ('{company1}', '{company2}')
-    """
-
-    df = pd.read_sql_query(query, conn)
-
-    conn.close()
-
-    return df
-
-company1 = "ABB"
-company2 = "TCS"
-
-conn = sqlite3.connect(DB_PATH)
-
-query = f"""
-SELECT
-    id,
-    company_name,
-    roe_percentage,
-    roce_percentage,
-    book_value,
-    face_value
-FROM companies
-WHERE id IN ('{company1}', '{company2}')
-"""
-
-df = pd.read_sql_query(
-    query,
-    conn
+from analytics.master_ranking import (
+    get_master_ranking
 )
 
-print(df)
 
-conn.close()
+def get_company_comparison(
+    company1,
+    company2
+):
+
+    df = get_master_ranking()
+
+    comparison_df = df[
+        df["company_id"].isin(
+            [company1, company2]
+        )
+    ]
+
+    return comparison_df[
+        [
+            "company_id",
+            "revenue",
+            "net_income",
+            "eps",
+            "financial_score",
+            "quality_score",
+            "valuation_score",
+            "master_score",
+            "rank"
+        ]
+    ]
+
+
+def comparison_summary(
+    company1,
+    company2
+):
+
+    return get_company_comparison(
+        company1,
+        company2
+    )
