@@ -57,6 +57,10 @@ profit_df = load_excel(
     "data/raw/profitandloss.xlsx"
 )
 
+profit_df = normalize_column_names(
+    profit_df
+)
+
 print("\nDUPLICATE COMPOSITE RECORDS")
 
 duplicates = show_composite_duplicates(
@@ -70,9 +74,6 @@ print(
     ]
 )
 
-profit_df = normalize_column_names(
-    profit_df
-)
 
 print("\nCOMPOSITE KEY CHECK")
 print(
@@ -84,10 +85,15 @@ print(
 
 print("\nFULL DUPLICATE ROWS")
 
+duplicate_records = profit_df[
+    profit_df.duplicated(
+        subset=["company_id", "year"],
+        keep=False
+    )
+]
+
 print(
-    profit_df[
-        profit_df["company_id"] == "ADANIPORTS"
-    ][
+    duplicate_records[
         ["id", "company_id", "year"]
     ]
 )
