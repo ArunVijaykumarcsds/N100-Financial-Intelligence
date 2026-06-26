@@ -67,6 +67,10 @@ from modules.profit_forecasting_page import (
     get_profit_forecasting_dashboard
 )
 
+from modules.health_prediction_page import (
+    get_health_prediction_dashboard
+)
+
 st.title("N100 Financial Intelligence")
 
 st.sidebar.title("Navigation")
@@ -88,6 +92,7 @@ page = st.sidebar.selectbox(
         "Revenue Forecasting",
         "Profit Forecasting",
         "EPS Forecasting",
+        "Health Prediction",
         
     ]
 )
@@ -750,3 +755,8 @@ elif page == "Profit Forecasting":
 elif page == "EPS Forecasting":
 
     get_eps_forecasting_dashboard()
+
+# health_prediction_page Dashboard 
+elif page == "Health Prediction":
+
+    get_health_prediction_dashboard()
