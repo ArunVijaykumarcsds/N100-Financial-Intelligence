@@ -79,6 +79,10 @@ from modules.future_winners_page import (
     get_future_winners_dashboard
 )
 
+from modules.ai_insights_page import (
+    get_ai_insights_dashboard
+)
+
 st.title("N100 Financial Intelligence")
 
 st.sidebar.title("Navigation")
@@ -103,6 +107,7 @@ page = st.sidebar.selectbox(
         "Health Prediction",
         "Growth Prediction",
         "Future Winners",
+        "AI Insights",
         
     ]
 )
@@ -780,3 +785,8 @@ elif page == "Growth Prediction":
 elif page == "Future Winners":
 
     get_future_winners_dashboard()
+
+# AI Insights Dashboard 
+elif page == "AI Insights":
+
+    get_ai_insights_dashboard()
