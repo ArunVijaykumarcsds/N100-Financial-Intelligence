@@ -20,6 +20,8 @@ from financial_health import (
 
 from quality import remove_extreme_growth
 
+from analytics_report import AnalyticsReport
+
 
 # Load data first
 df = pd.read_excel(
@@ -57,3 +59,12 @@ print(
         ]
     ].head(15)
 )
+
+report = AnalyticsReport()
+
+snapshot = report.company_snapshot(
+    df,
+    "ABB"
+)
+
+print(snapshot)
