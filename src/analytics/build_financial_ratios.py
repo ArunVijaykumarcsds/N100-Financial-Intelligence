@@ -9,6 +9,7 @@ import pandas as pd
 
 from analytics.ratios import RatioEngine
 from analytics.cashflow_kpis import CashFlowKPIs
+from analytics.cagr_builder import get_5yr_cagr
 
 
 def build_financial_ratios():
@@ -131,7 +132,85 @@ def build_financial_ratios():
         axis=1
     )
 
-    output_columns = [
+    # ==================================
+    # Additional Sprint 2 KPI Columns
+    # ==================================
+
+    df["earnings_per_share"] = df["eps"]
+
+    df["dividend_payout_ratio_pct"] = (
+        df["dividend_payout"]
+    )
+
+    df["total_debt_cr"] = (
+        df["borrowings"]
+    )
+
+    df["cash_from_operations_cr"] = (
+        df["operating_activity"]
+    )
+
+    df["book_value_per_share"] = (
+        (
+            df["equity_capital"]
+            +
+            df["reserves"]
+        )
+        /
+        df["equity_capital"]
+    )
+
+    df["composite_quality_score"] = (
+        df["opm_percentage"].fillna(0) * 0.40
+        +
+        df["eps"].fillna(0) * 0.40
+        +
+        df["dividend_payout"].fillna(0) * 0.20
+    )
+
+    # ==================================
+    # CAGR Metrics
+    # ==================================
+
+    df["revenue_cagr_5yr"] = None
+    df["pat_cagr_5yr"] = None
+    df["eps_cagr_5yr"] = None
+
+    for company in df["company_id"].unique():
+
+        company_df = (
+            df[df["company_id"] == company]
+            .sort_values("year")
+        )
+
+        revenue_cagr = get_5yr_cagr(
+            company_df["sales"]
+        )
+
+        pat_cagr = get_5yr_cagr(
+            company_df["net_profit"]
+        )
+
+        eps_cagr = get_5yr_cagr(
+            company_df["eps"]
+        )
+
+        df.loc[
+            df["company_id"] == company,
+            "revenue_cagr_5yr"
+        ] = revenue_cagr
+
+        df.loc[
+            df["company_id"] == company,
+            "pat_cagr_5yr"
+        ] = pat_cagr
+
+        df.loc[
+            df["company_id"] == company,
+            "eps_cagr_5yr"
+        ] = eps_cagr
+
+        output_columns = [
 
         "company_id",
         "year",
@@ -149,7 +228,20 @@ def build_financial_ratios():
         "free_cash_flow",
         "cfo_quality_score",
         "capex_intensity",
-        "fcf_conversion"
+        "fcf_conversion",
+
+        "earnings_per_share",
+        "book_value_per_share",
+        "dividend_payout_ratio_pct",
+
+        "total_debt_cr",
+        "cash_from_operations_cr",
+
+        "revenue_cagr_5yr",
+        "pat_cagr_5yr",
+        "eps_cagr_5yr",
+
+        "composite_quality_score"
     ]
 
     result = df[
