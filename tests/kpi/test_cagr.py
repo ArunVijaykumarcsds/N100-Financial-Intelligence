@@ -73,3 +73,15 @@ def test_both_negative():
     )
 
     assert flag == "BOTH_NEGATIVE"
+
+def test_invalid_years():
+
+    value, flag = (
+        CAGRCalculator.calculate(
+            100,
+            200,
+            0
+        )
+    )
+
+    assert flag == "INVALID"

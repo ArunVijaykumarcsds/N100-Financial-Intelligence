@@ -100,3 +100,14 @@ def test_asset_turnover():
         )
         == 2.00
     )
+
+def test_interest_coverage_zero_interest():
+
+    assert (
+        RatioEngine.interest_coverage(
+            100,
+            20,
+            0
+        )
+        is None
+    )
